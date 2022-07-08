@@ -36,6 +36,10 @@ const SinglePizza: React.FC = () => {
         }))
     }
 
+    console.log(pizza)
+
+    console.log(Object.keys(pizza).length)
+
     if (Object.keys(pizza).length <= 0) {
         return (
             <>

@@ -3,6 +3,7 @@ import axios from "axios";
 import {Pizza, PizzaStateInterface} from "./types";
 import {Status} from "../pizzas/types";
 
+
 const initialState: PizzaStateInterface = {
     item: {},
     status: Status.LOADING // loading | success | error
@@ -20,16 +21,20 @@ export const slice = createSlice({
     reducers: {},
     extraReducers: (build) => {
         build.addCase(fetchPizza.pending, (state) => {
-                state.item = {}
-                state.status = Status.LOADING
-        })
-        build.addCase(fetchPizza.fulfilled, (state) => {
             state.item = {}
+            state.status = Status.LOADING
+        })
+        build.addCase(fetchPizza.fulfilled, (state, action) => {
+            const {id, count, price, imageUrl, rating, sizes, title, types, category} = action.payload
+            state.item = {
+                id, count, price, imageUrl, rating, sizes, title, types, category
+            }
+
             state.status = Status.SUCCESS
         })
         build.addCase(fetchPizza.rejected, (state) => {
-                state.status = Status.ERROR
-                state.item = {}
+            state.status = Status.ERROR
+            state.item = {}
         })
     }
 })
